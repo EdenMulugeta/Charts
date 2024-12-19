@@ -1,3 +1,5 @@
+// Post Options
+
 export const articleReadTimeChartOptions = {
   tooltip: {
     formatter: "{a} <br/>{b} : {c}%",
@@ -288,3 +290,182 @@ export const articleInteractionScoreByAudienceTypeOption = {
 //     },
 //   ],
 // };
+
+//User Options
+
+export const userCatergoricalReputationDataOptions = {
+  title: {},
+  tooltip: {
+    trigger: "item",
+    formatter: "{a} <br/>{b} : {c} ({d}%)",
+  },
+  legend: {
+    type: "scroll",
+    orient: "vertical",
+    right: 10,
+    top: 10,
+    bottom: 20,
+    data: [],
+  },
+  series: [
+    {
+      name: "姓名",
+      type: "pie",
+      radius: "55%",
+      center: ["40%", "50%"],
+      data: [],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: "rgba(0, 0, 0, 0.5)",
+        },
+      },
+    },
+  ],
+};
+
+export const networkAnalysisReputationScorePercentageOption = {
+  angleAxis: {},
+  radiusAxis: {},
+  polar: {},
+  series: [
+    {
+      type: "bar",
+      data: [1, 2, 3, 4],
+      coordinateSystem: "polar",
+      name: "A",
+      stack: "a",
+      emphasis: {
+        focus: "series",
+      },
+    },
+    {
+      type: "bar",
+      data: [1, 2, 3, 4],
+      coordinateSystem: "polar",
+      name: "C",
+      stack: "a",
+      emphasis: {
+        focus: "series",
+      },
+    },
+  ],
+  legend: {
+    show: true,
+    data: ["A", "B", "C"],
+  },
+};
+
+export const userExpertiseLevelAndUserNatureForUserOption = {
+  tooltip: {
+    trigger: "item",
+    triggerOn: "mousemove",
+  },
+  series: [
+    {
+      type: "tree",
+      data: [],
+      top: "1%",
+      left: "7%",
+      bottom: "1%",
+      right: "20%",
+      symbolSize: 7,
+      label: {
+        position: "left",
+        verticalAlign: "middle",
+        align: "right",
+        fontSize: 9,
+      },
+      leaves: {
+        label: {
+          position: "right",
+          verticalAlign: "middle",
+          align: "left",
+        },
+      },
+      emphasis: {
+        focus: "descendant",
+      },
+      expandAndCollapse: true,
+      animationDuration: 550,
+      animationDurationUpdate: 750,
+    },
+  ],
+};
+
+export const numberOfMPXRFromPublicationForUserOption = {
+  tooltip: {
+    trigger: "axis",
+    axisPointer: {
+      // Use axis to trigger tooltip
+      type: "shadow", // 'shadow' as default; can also be 'line' or 'shadow'
+    },
+  },
+  legend: {},
+  grid: {
+    left: "3%",
+    right: "4%",
+    bottom: "3%",
+    containLabel: true,
+  },
+  xAxis: {
+    type: "value",
+  },
+  yAxis: {
+    type: "category",
+    data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  },
+  series: [
+    {
+      name: "MPXR From",
+      type: "bar",
+      stack: "total",
+      label: {
+        show: true,
+      },
+      emphasis: {
+        focus: "series",
+      },
+      data: [],
+    },
+    {
+      name: "MPXR By",
+      type: "bar",
+      stack: "total",
+      label: {
+        show: true,
+      },
+      emphasis: {
+        focus: "series",
+      },
+      data: [],
+    },
+  ],
+};
+
+export const MPXRFromInteractionPercentageUserOption = {
+  title: {},
+  tooltip: {
+    trigger: "item",
+  },
+  legend: {
+    orient: "vertical",
+    left: "left",
+  },
+  series: [
+    {
+      name: "Access From",
+      type: "pie",
+      radius: "50%",
+      data: [],
+      emphasis: {
+        itemStyle: {
+          shadowBlur: 10,
+          shadowOffsetX: 0,
+          shadowColor: "rgba(0, 0, 0, 0.5)",
+        },
+      },
+    },
+  ],
+};
