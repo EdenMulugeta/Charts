@@ -12,6 +12,7 @@ import {
   userExpertiseLevelAndUserNatureForUserOption,
   numberOfMPXRFromPublicationForUserOption,
   MPXRFromInteractionPercentageUserOption,
+  numberOfMPXRFromDifferentRewardsOption,
 } from "./options";
 
 let post_selectors = {
@@ -50,6 +51,9 @@ let user_selectors = {
   ),
   MPXRFromInteractionPercentageUser: document.getElementById(
     "MPXR-from-interaction-percentage-user"
+  ),
+  numberOfMPXRFromDifferentRewards: document.getElementById(
+    "number-of-MPXR-from-different-rewards"
   ),
 };
 
@@ -579,22 +583,18 @@ const initMPXRFromInteractionPercentageUser = (data) => {
       "Total User Percentage of Interactions"
     ];
   console.log(interactions);
-  const interaction = Object.keys(
-    data["Total User Interaction Breakdown"][
-      "Total User Percentage of Interactions"
-    ]
-  );
-  console.log(interaction);
-
-  const seriesData = interactions.map((i) => ({
-    name: i,
-    value: interactions[i],
+  const interactionKeys = Object.keys(interactions);
+  const interactionValues = Object.values(interactions);
+  const seriesData = interactionKeys.map((key, index) => ({
+    name: key,
+    value: interactionValues[index],
   }));
 
   let title = {
     text: "User interaction Score Breakdown By Percentage",
     subtext: "MPXR From Interaction",
     left: "center",
+    bottom: 45,
   };
 
   const series = userCatergoricalReputationDataOptions.series[0];
@@ -611,6 +611,48 @@ const initMPXRFromInteractionPercentageUser = (data) => {
   });
 };
 
+const initNumberOfMPXRFromDifferentRewards = (data) => {
+  const chart = echarts.init(user_selectors.numberOfMPXRFromDifferentRewards);
+
+  const seriesData = [];
+  const reputations = data["Reputation Score Breakdown by number"];
+  const reputationData = [];
+
+  console.log("reputations " + JSON.stringify(reputations));
+
+  for (const rep in reputations) {
+    if (
+      rep === "MPXR From Comment" ||
+      rep === "MPXR From Publication" ||
+      rep === "MPXR From Social Post"
+    ) {
+      continue;
+    } else {
+      reputationData.push({ value: reputations[rep], name: rep });
+    }
+  }
+
+  console.log("reputationData " + JSON.stringify(reputationData));
+
+  for (const item of reputationData) {
+    if (typeof item.value === "number") {
+      seriesData.push(item);
+    } else if (typeof item.value === "object") {
+      for (const objItem in item.value) {
+        seriesData.push({ value: item.value[objItem], name: objItem });
+      }
+    }
+  }
+
+  const series = numberOfMPXRFromDifferentRewardsOption.series[0];
+  const legend = numberOfMPXRFromDifferentRewardsOption.legend[0];
+
+  chart.setOption({
+    ...numberOfMPXRFromDifferentRewardsOption,
+    series: { ...series, data: seriesData },
+    legend: { ...legend, data: seriesData.map((item) => item.name) },
+  });
+};
 async function fetchedPostById(postId) {
   const url = `http://localhost:3000/post/${postId}`; // Construct the URL using the postId
   console.log(`Fetching post with post_id: ${postId}`);
@@ -680,6 +722,7 @@ async function fetchedUserById(userId) {
       initUserExpertiseLevelAndUserNatureForUser(data);
       initNumberOfMPXRFromPublicationForUser(data);
       initMPXRFromInteractionPercentageUser(data);
+      initNumberOfMPXRFromDifferentRewards(data);
       // updateUserCatergoricalReputationData(data);
       // updateNetworkAnalysisChart(data);
       // updateUserExpertiseLevelAndUserNatureForUserChart(data);
